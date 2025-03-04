@@ -4,8 +4,10 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 
-export function renderImages(images, gallery) {
-  gallery.innerHTML = '';
+export function renderImages(images, gallery, append = false) {
+  if (!append) {
+    gallery.innerHTML = '';
+  }
   images.forEach((image) => {
     const card = document.createElement('div');
     card.classList.add('image-card');
@@ -36,4 +38,12 @@ export function renderImages(images, gallery) {
     gallery.appendChild(card);
   });
   new SimpleLightbox('[data-lightbox=\'gallery\']').refresh();
+}
+
+export function smoothScrollToNewImages() {
+  const card = document.querySelector('.image-card');
+  if (card) {
+    const cardHeight = card.getBoundingClientRect().height;
+    window.scrollBy({ top: cardHeight * 2, behavior: 'smooth' });
+  }
 }
